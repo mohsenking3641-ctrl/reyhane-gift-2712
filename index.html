@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#fff0f6">
+  <title>یک سورپرایز کوچولو</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Estedad:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/login.css">
+</head>
+<body>
+  <div class="glow g1"></div><div class="glow g2"></div>
+  <main class="login-wrap">
+    <div class="kitty" aria-hidden="true">
+      <svg viewBox="0 0 180 150" role="img">
+        <path d="M43 54 37 15q-1-8 7-3l35 25M137 54l6-39q1-8-7-3l-35 25" fill="#fff" stroke="#e9a8c5" stroke-width="5" stroke-linejoin="round"/>
+        <ellipse cx="90" cy="83" rx="61" ry="55" fill="#fff" stroke="#e9a8c5" stroke-width="4"/>
+        <path d="M68 82q-8-10-16 0M128 82q-8-10-16 0" fill="none" stroke="#79566b" stroke-width="4" stroke-linecap="round"/>
+        <path d="M86 94q4 5 8 0" fill="none" stroke="#d77da8" stroke-width="3" stroke-linecap="round"/>
+        <ellipse cx="51" cy="96" rx="10" ry="6" fill="#f6b4ce"/><ellipse cx="129" cy="96" rx="10" ry="6" fill="#f6b4ce"/>
+        <path d="M90 89 84 85q-5-4-8 1 0 8 14 13 14-5 14-13-3-5-8-1z" fill="#f08ab5"/>
+        <path d="M25 70q-10 2-14 9m144-9q10 2 14 9" stroke="#e7a2c0" stroke-width="3" stroke-linecap="round"/>
+      </svg>
+      <span class="spark s1">✦</span><span class="spark s2">♡</span>
+    </div>
+    <p class="eyebrow">یک سورپرایز کوچولو، فقط برای تو</p>
+    <h1>سلام ریحانه جان! <span>🎀</span></h1>
+    <p class="sub">برای باز شدن این دنیای کوچولو، رمز چهاررقمی رو وارد کن.</p>
+    <div class="pin-dots" id="dots" aria-label="چهار رقم رمز">
+      <span></span><span></span><span></span><span></span>
+    </div>
+    <div class="keypad" id="keypad" aria-label="صفحه‌کلید عددی">
+      <button data-num="1">۱</button><button data-num="2">۲</button><button data-num="3">۳</button>
+      <button data-num="4">۴</button><button data-num="5">۵</button><button data-num="6">۶</button>
+      <button data-num="7">۷</button><button data-num="8">۸</button><button data-num="9">۹</button>
+      <button class="blank" disabled></button><button data-num="0">۰</button><button id="erase" class="erase" aria-label="پاک کردن">⌫</button>
+    </div>
+    <button class="enter" id="enter" disabled>ورود به سورپرایز <span>♡</span></button>
+    <p class="feedback" id="feedback" role="status" aria-live="polite"></p>
+    <div class="tiny-hearts" aria-hidden="true">♡　✧　♡</div>
+  </main>
+  <script src="/login.js"></script>
+</body>
+</html>
