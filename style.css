@@ -71,3 +71,195 @@ h2{font-size:clamp(23px,6vw,34px);line-height:1.8;color:#a6537b;margin:8px 0 12p
 /* Paw accents appear briefly on each screen transition, away from the main copy. */
 .paw{font-size:18px;line-height:1;user-select:none;text-shadow:0 1px 5px #fff8}
 .heart-particle-layer{will-change:opacity}
+
+
+/* Complete cinematic finale: all effects are staged and phone-friendly. */
+.finale-scene{
+  position:relative;
+  width:min(100%,430px);
+  height:clamp(290px,82vw,410px);
+  min-height:290px;
+  margin:12px auto 18px;
+  isolation:isolate;
+  overflow:visible;
+}
+.heart-swarm,.word-heart-stage,.nested-heart-stage,.finale-butterflies,
+.finale-paws,.finale-constellation,.kitten-finale,.finale-bow{
+  position:absolute;inset:0;pointer-events:none;
+}
+.heart-swarm{z-index:4;overflow:visible}
+.cinematic-heart{
+  position:absolute;left:50%;top:48%;
+  font-size:var(--heart-size,48px);line-height:1;
+  color:transparent;
+  background:linear-gradient(145deg,#fff 2%,#ffd7e7 22%,#f18bb6 52%,#bd4d7d 100%);
+  -webkit-background-clip:text;background-clip:text;
+  filter:drop-shadow(0 5px 5px #a8447155) drop-shadow(0 0 12px #f7a8ca88);
+  will-change:transform,opacity;
+}
+.word-heart-stage{
+  z-index:5;display:grid;place-items:center;
+  opacity:0;visibility:hidden;transform:scale(.88);
+  cursor:pointer;pointer-events:none;
+  transition:opacity .75s ease,transform .9s cubic-bezier(.2,.75,.2,1),visibility .75s;
+  -webkit-tap-highlight-color:transparent;
+  touch-action:manipulation;
+  outline:none;
+}
+.word-heart-stage.word-heart-visible{
+  opacity:1;visibility:visible;transform:scale(1);pointer-events:auto;
+  animation:wordHeartEntrance 1s cubic-bezier(.2,.75,.2,1) both;
+}
+.word-heart-stage:focus-visible .word-heart-halo{stroke:#b83f77;stroke-width:7}
+.word-heart-svg{width:100%;height:100%;overflow:visible;filter:drop-shadow(0 8px 18px #d879a655)}
+.word-heart-halo{fill:#f7b5d0;fill-opacity:.10;stroke:#e58ab0;stroke-width:2.2;filter:drop-shadow(0 0 12px #ee9fc1aa)}
+.word-heart-line{
+  fill:#b94e7d;stroke:#fff4f8;stroke-width:.35px;
+  paint-order:stroke fill;
+  font-family:Arial,sans-serif;font-size:15px;font-weight:800;
+  letter-spacing:.5px;opacity:0;
+  filter:drop-shadow(0 1px 1px #fff9);
+  animation:wordLineAppear .48s ease var(--row-delay,0ms) forwards;animation-play-state:paused;
+}
+.word-heart-stage.word-heart-scattering{
+  opacity:0;transform:scale(1.18) rotate(-3deg);pointer-events:none;
+  transition:opacity .55s ease,transform .7s ease;
+}
+.word-heart-stage.word-heart-hidden{visibility:hidden}
+.heart-touch-glint{
+  position:absolute;top:13%;right:19%;font-size:26px;color:#fff;
+  text-shadow:0 0 8px #e77da8,0 0 18px #fff;
+  opacity:0;animation:glintBlink 2.2s ease-in-out 1s infinite;
+}
+.word-heart-visible .heart-touch-glint{opacity:1}
+.word-heart-visible .word-heart-line{animation-play-state:running}
+.nested-heart-stage{
+  z-index:6;display:grid;place-items:center;
+  opacity:0;visibility:hidden;transform:scale(.9);
+  transition:opacity .8s ease,transform .9s ease,visibility .8s;
+}
+.nested-heart-stage.nested-heart-visible{
+  opacity:1;visibility:visible;transform:scale(1);
+}
+.nested-heart-svg{width:100%;height:100%;overflow:visible;filter:drop-shadow(0 8px 18px #d879a655)}
+.mask-draw{fill:none;stroke:#fff;stroke-width:38;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1000;stroke-dashoffset:1000}
+.mask-middle{stroke-width:33}
+.mask-inner{stroke-width:28}
+.nested-ring{opacity:0;transform-box:fill-box;transform-origin:center}
+.nested-ring text{
+  font-family:Arial,sans-serif;font-size:19px;font-weight:800;
+  letter-spacing:1.1px;fill:#bd4d7d;
+}
+.ring-middle text{fill:#d46f9b}
+.ring-inner text{fill:#ee9abb}
+.nested-heart-visible .ring-outer{animation:ringAppear .6s ease .15s forwards,heartPulse 2.15s ease-in-out 5.2s infinite}
+.nested-heart-visible .ring-middle{animation:ringAppear .6s ease 1.75s forwards,heartPulse 2.15s ease-in-out 5.35s infinite}
+.nested-heart-visible .ring-inner{animation:ringAppear .6s ease 3.25s forwards,heartPulse 2.15s ease-in-out 5.5s infinite}
+.nested-heart-visible .mask-outer{animation:maskReveal 1.75s cubic-bezier(.4,0,.2,1) .15s forwards}
+.nested-heart-visible .mask-middle{animation:maskReveal 1.6s cubic-bezier(.4,0,.2,1) 1.75s forwards}
+.nested-heart-visible .mask-inner{animation:maskReveal 1.4s cubic-bezier(.4,0,.2,1) 3.25s forwards}
+.finale-butterflies{z-index:8}
+.finale-butterfly{
+  position:absolute;font-size:27px;opacity:0;
+  filter:drop-shadow(0 3px 5px #d77da555);
+  animation:butterflyFlight 7s ease-in-out infinite;
+}
+.butterfly-1{left:2%;top:35%;animation-delay:.1s}
+.butterfly-2{right:3%;top:18%;font-size:23px;animation-delay:1.7s}
+.butterfly-3{left:72%;bottom:5%;font-size:21px;animation-delay:3.2s}
+.finale-paws{z-index:2}
+.finale-paw-print{
+  position:absolute;font-size:38px;opacity:0;
+  filter:drop-shadow(0 3px 5px #c96c9655);
+  transform:rotate(var(--paw-rotate,0deg));
+  animation:finalPawShow 1.2s ease var(--paw-delay,0ms) forwards;
+}
+.finale-bow{
+  z-index:9;inset:auto auto 10% 48%;font-size:38px;
+  opacity:0;transform:translateY(12px) scale(.6) rotate(-15deg);
+  filter:drop-shadow(0 5px 7px #c96c9655);
+}
+.bow-arrives .finale-bow{animation:bowPop .8s cubic-bezier(.2,.8,.2,1) forwards}
+.kitten-finale{
+  z-index:10;inset:auto auto 0 1%;
+  width:145px;height:115px;opacity:0;transform:translate(-18px,12px) scale(.65);
+}
+.kitten-3d{position:absolute;left:0;bottom:0;width:100px;height:98px;overflow:visible;filter:drop-shadow(0 7px 7px #b85e8955)}
+.kitten-tail-art{position:absolute;left:53px;bottom:30px;width:90px;height:78px;overflow:visible}
+.kitten-tail-path{
+  fill:none;stroke:#c77a9e;stroke-width:5;stroke-linecap:round;
+  stroke-dasharray:1000;stroke-dashoffset:1000;
+}
+.kitten-tail-star{fill:#f5c1d7;stroke:#d879a6;stroke-width:2;opacity:0;transform-origin:94px 104px;transform:scale(.2)}
+.kitten-arrives .kitten-finale{animation:kittenPop .8s cubic-bezier(.2,.8,.2,1) forwards}
+.kitten-arrives .kitten-tail-path{animation:tailDraw 1.8s ease .55s forwards}
+.kitten-arrives .kitten-tail-star{animation:tailStar .55s ease 2.1s forwards}
+.finale-constellation{z-index:7;opacity:0;overflow:visible;filter:drop-shadow(0 0 7px #f4a5c8)}
+.constellation-line{fill:none;stroke:#f2a6c7;stroke-width:1.6;stroke-dasharray:1000;stroke-dashoffset:1000;stroke-linecap:round}
+.constellation-stars{fill:#fff0a9;stroke:#e5a0bc;stroke-width:1.2;opacity:0}
+.constellation-arrives .constellation-line{animation:maskReveal 2.3s ease .2s forwards}
+.constellation-arrives .constellation-stars{animation:starsTwinkle .8s ease 1.8s forwards}
+.heart-particle-layer{position:fixed;inset:0;z-index:30;pointer-events:none;overflow:hidden}
+.spark-particle{
+  position:fixed;width:5px;height:5px;border-radius:50%;
+  background:radial-gradient(circle,#fff 0,#ffd5e5 45%,#e77eaa 100%);
+  box-shadow:0 0 9px 3px #f5a8c888;
+}
+.mini-heart-particle{
+  position:fixed;width:9px;height:9px;background:#ee91b7;
+  transform:rotate(-45deg);border-radius:2px;
+  box-shadow:0 0 9px #f3a8c8;
+}
+.mini-heart-particle:before,.mini-heart-particle:after{
+  content:"";position:absolute;width:9px;height:9px;background:inherit;border-radius:50%;
+}
+.mini-heart-particle:before{top:-4px;left:0}
+.mini-heart-particle:after{left:4px;top:0}
+.ending.finale-active .celebration{animation:heartbeat 1.7s infinite}
+.paw{font-size:34px!important;line-height:1;user-select:none;text-shadow:0 1px 5px #fff8}
+@keyframes wordHeartEntrance{0%{filter:blur(5px);opacity:0}100%{filter:blur(0);opacity:1}}
+@keyframes wordLineAppear{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:translateY(0)}}
+@keyframes glintBlink{0%,100%{transform:scale(.7) rotate(0);opacity:.25}50%{transform:scale(1.2) rotate(25deg);opacity:1}}
+@keyframes ringAppear{from{opacity:0}to{opacity:1}}
+@keyframes maskReveal{to{stroke-dashoffset:0}}
+@keyframes butterflyFlight{
+  0%,100%{opacity:0;transform:translate(0,8px) rotate(-12deg) scale(.75)}
+  18%,78%{opacity:.9}
+  48%{transform:translate(24px,-32px) rotate(12deg) scale(1.08)}
+}
+@keyframes finalPawShow{0%{opacity:0;transform:translateY(8px) scale(.6) rotate(var(--paw-rotate,0deg))}35%{opacity:.72}100%{opacity:.36;transform:translateY(0) scale(1) rotate(var(--paw-rotate,0deg))}}
+@keyframes bowPop{0%{opacity:0;transform:translateY(12px) scale(.6) rotate(-15deg)}70%{opacity:1;transform:translateY(-3px) scale(1.12) rotate(5deg)}100%{opacity:1;transform:translateY(0) scale(1) rotate(0)}}
+@keyframes kittenPop{0%{opacity:0;transform:translate(-18px,12px) scale(.65)}70%{opacity:1;transform:translate(3px,-5px) scale(1.06)}100%{opacity:1;transform:translate(0,0) scale(1)}}
+@keyframes tailDraw{to{stroke-dashoffset:0}}
+@keyframes tailStar{to{opacity:1;transform:scale(1)}}
+@keyframes constellationFade{to{opacity:.95}}
+@keyframes starsTwinkle{0%{opacity:0}50%{opacity:1}100%{opacity:.82}}
+@media(max-width:520px){
+  .finale-scene{width:min(100%,370px);height:clamp(275px,82vw,345px);min-height:275px}
+  .word-heart-line{font-size:16px}
+  .nested-ring text{font-size:20px;letter-spacing:.7px}
+  .finale-paw-print{font-size:34px}
+  .kitten-finale{transform:translate(-18px,12px) scale(.58);transform-origin:left bottom}
+  .kitten-arrives .kitten-finale{animation:kittenPop .8s cubic-bezier(.2,.8,.2,1) forwards}
+}
+@media(prefers-reduced-motion:reduce){
+  .word-heart-line,.finale-butterfly,.finale-paw-print,.kitten-finale,.kitten-tail-path,
+  .kitten-tail-star,.finale-bow,.constellation-line,.constellation-stars,.nested-ring,.mask-draw{
+    animation:none!important;opacity:1!important;stroke-dashoffset:0!important
+  }
+  .cinematic-heart{display:none!important}
+}
+
+.swarm-heart-silhouette{
+  position:absolute;left:50%;top:48%;width:74%;height:auto;
+  transform:translate(-50%,-50%) scale(.82);
+  overflow:visible;opacity:0;pointer-events:none;
+  filter:drop-shadow(0 0 18px #f08ab8);
+}
+.swarm-heart-silhouette path{fill:#f6a9c9;fill-opacity:.32;stroke:#ffe7f1;stroke-width:5}
+.heart-swarm.assembled .swarm-heart-silhouette{animation:assembledHeartFlash .8s ease forwards}
+@keyframes assembledHeartFlash{0%{opacity:0;transform:translate(-50%,-50%) scale(.82)}35%{opacity:.85;transform:translate(-50%,-50%) scale(1.02)}100%{opacity:0;transform:translate(-50%,-50%) scale(1.12)}}
+.constellation-arrives .finale-constellation{animation:constellationFade 1.1s ease forwards}
+
+.constellation-arrives .kitten-tail-star{animation:tailStarJoin 1.05s cubic-bezier(.2,.7,.2,1) forwards}
+@keyframes tailStarJoin{from{opacity:1;transform:scale(1)}to{opacity:1;transform:translate(92px,6px) scale(.72)}}
