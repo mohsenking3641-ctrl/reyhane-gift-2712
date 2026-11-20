@@ -279,7 +279,43 @@
       $("heartSwarm").classList.add("swarm-finished");
       wordHeartStage.classList.add("word-heart-visible");
       wordHeartStage.setAttribute("aria-pressed", "false");
+      // Bring back the original kitten that draws a heart with its tail.
+      const ending = $("ending");
+      setTimeout(() => ending.classList.add("kitten-arrives"), 900);
+      // After the large word-heart has formed, reveal its three smaller word-hearts.
+      setTimeout(() => ending.classList.add("inner-hearts-arrive"), 2450);
+      // The same illustrated kitten follows a butterfly across the finale.
+      setTimeout(() => runFinaleKittenChase(), 5200);
+      setTimeout(() => ending.classList.add("constellation-arrives", "bow-arrives"), 7600);
     }, reducedMotion ? 80 : 3600);
+  }
+
+
+  function runFinaleKittenChase() {
+    const host = $("finaleScene");
+    const original = $("kittenFinale");
+    if (!host || !original || document.querySelector(".finale-kitten-chase")) return;
+    const cat = original.cloneNode(true);
+    cat.removeAttribute("id");
+    cat.className = "finale-kitten-chase";
+    cat.setAttribute("aria-hidden", "true");
+    cat.querySelectorAll("[id]").forEach(node => node.removeAttribute("id"));
+    const butterfly = document.createElement("span");
+    butterfly.className = "finale-chase-butterfly";
+    butterfly.textContent = "🦋";
+    host.append(cat, butterfly);
+    const distance = Math.max(260, host.clientWidth - 100);
+    butterfly.animate([
+      { transform: "translate(0,0) rotate(-12deg)" },
+      { transform: `translate(${distance * .48}px,-34px) rotate(12deg)` },
+      { transform: `translate(${distance}px,-8px) rotate(-8deg)` }
+    ], { duration: 5200, easing: "ease-in-out", fill: "forwards" });
+    cat.animate([
+      { transform: "translate(0,0) scale(.58)" },
+      { transform: `translate(${distance * .48 - 52}px,-5px) scale(.58)` },
+      { transform: `translate(${distance - 46}px,0) scale(.58)` }
+    ], { duration: 5200, delay: 420, easing: "ease-in-out", fill: "forwards" });
+    setTimeout(() => { cat.remove(); butterfly.remove(); }, 5900);
   }
 
   function scatterHeartIntoLight() {
