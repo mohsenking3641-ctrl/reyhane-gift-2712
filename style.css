@@ -24,3 +24,50 @@ h2{font-size:clamp(23px,6vw,34px);line-height:1.8;color:#a6537b;margin:8px 0 12p
 .celebration{font-size:38px;letter-spacing:9px;animation:heartbeat 1.5s infinite}.ending h2{max-width:520px;margin:10px auto}.ending-text{font-size:29px;color:#ce6d99;font-weight:800;margin:16px}.music-toggle{border:1px solid #efc4d8;background:#fff8fb;color:#a65c80;padding:10px 17px;border-radius:14px;font:600 13px Estedad,Vazirmatn,Tahoma,sans-serif}.tiny-end{font-size:12px;color:#b18a9f;margin-top:24px}.sound{position:fixed;z-index:4;left:15px;bottom:15px;width:42px;height:42px;border:1px solid #f1c9da;background:#fff9fc;color:#b96b90;border-radius:50%;font-size:20px;box-shadow:0 5px 16px #c77b9c22;cursor:pointer}
 @keyframes appear{from{opacity:0;transform:translateY(16px) scale(.985)}to{opacity:1;transform:translateY(0) scale(1)}}@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}@keyframes heartbeat{0%,100%{transform:scale(1)}12%{transform:scale(1.12)}24%{transform:scale(1)}36%{transform:scale(1.08)}}@keyframes rise{to{transform:translateY(-110vh) rotate(30deg);opacity:0}}
 @media(max-width:520px){body{padding:12px}.experience{min-height:calc(100svh - 24px)}.letter-card{padding:19px 16px;max-height:calc(100svh - 24px)}.letter-copy{font-size:14px;line-height:2.15}.answers{gap:9px}.answer{min-width:118px}.sound{bottom:10px;left:10px}}
+
+/* Finale: glossy particles assemble into a heart, then the three typographic hearts draw in sequence. */
+.love-heart-wrap{width:min(100%,430px);margin:10px auto 18px;padding:4px 8px 0;position:relative;isolation:isolate;min-height:clamp(260px,78vw,390px)}
+.love-heart-art{display:block;width:100%;height:auto;overflow:visible;filter:drop-shadow(0 8px 18px #d879a633);position:relative;z-index:2;opacity:0}
+.ending.finale-active .love-heart-art{animation:heartArtReveal .9s ease 2.95s both}
+.heart-outline{fill:none;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1000;stroke-dashoffset:1000}
+.outline-outer{stroke:#dc6f9e;animation:drawHeart 1.55s cubic-bezier(.4,0,.2,1) 3.2s both}
+.outline-middle{stroke:#bd527f;animation:drawHeart 1.4s cubic-bezier(.4,0,.2,1) 4.65s both}
+.outline-inner{stroke:#ef9cbe;animation:drawHeart 1.25s cubic-bezier(.4,0,.2,1) 6.05s both}
+.heart-ring{opacity:0;transform-box:fill-box;transform-origin:center;animation:revealHeartWords .9s ease both,heartPulse 2.1s ease-in-out 8.65s infinite}
+.heart-ring text{font-family:Arial,sans-serif;font-size:17px;font-weight:800;letter-spacing:1.3px}
+.outer-ring{fill:#dc6f9e;animation-delay:4.35s,8.65s}.middle-ring{fill:#bd527f;animation-delay:5.8s,8.82s}.inner-ring{fill:#ef9cbe;animation-delay:7.2s,9s}
+.heart-sparkles{fill:#e5a0bc;font-size:22px;opacity:0;animation:sparkleIn .7s ease 7.85s both}.heart-sparkles text:nth-child(2n){fill:#c56e96}
+.burst-heart{position:absolute;inset:0;width:100%;height:100%;z-index:1;overflow:visible;pointer-events:none;filter:drop-shadow(0 0 18px #f19abe88);opacity:0}
+.burst-heart path{fill:#f8b5d0;fill-opacity:.12;stroke:#e985b1;stroke-width:5;stroke-linecap:round;stroke-dasharray:1000;stroke-dashoffset:1000}
+.ending.finale-active .burst-heart{animation:burstHeartOut 1.2s ease-in-out .2s both}
+.ending.finale-active .burst-heart path{animation:burstHeartDraw 1.2s ease .2s both}
+.ending.finale-active .celebration{animation:heartbeat 1.5s infinite}
+.heart-particle-layer{position:fixed;inset:0;z-index:5;pointer-events:none;overflow:hidden}
+.gloss-particle{position:absolute;width:15px;height:15px;border-radius:5px 5px 3px 3px;background:linear-gradient(145deg,#fff8fc 0%,#ffc5dc 35%,#e66e9e 100%);box-shadow:inset 2px 2px 4px #fff9,0 3px 9px #b94f7b66;transform:rotate(-45deg)}
+.gloss-particle:before,.gloss-particle:after{content:"";position:absolute;width:15px;height:15px;border-radius:50%;background:inherit}.gloss-particle:before{top:-7px;left:0}.gloss-particle:after{left:7px;top:0}
+.bubble{position:fixed;bottom:-35px;border:1px solid #fff9;background:radial-gradient(circle at 32% 28%,#fff9,#f5b8d044 58%,#ed9bc022);border-radius:50%;pointer-events:none;z-index:0;animation:bubbleRise linear forwards;box-shadow:inset -3px -4px 9px #d87da51c,0 0 12px #fff8}
+.paw{position:fixed;z-index:0;pointer-events:none;color:#e7a6c0;opacity:0;filter:drop-shadow(0 2px 4px #d879a622);animation:pawDrift 7s ease-in-out forwards}
+@keyframes drawHeart{to{stroke-dashoffset:0}}@keyframes revealHeartWords{from{opacity:0}to{opacity:1}}@keyframes heartArtReveal{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:scale(1)}}
+@keyframes sparkleIn{0%{opacity:0;transform:scale(.6)}60%{opacity:1;transform:scale(1.2)}100%{opacity:.9;transform:scale(1)}}
+@keyframes heartPulse{0%,100%{transform:scale(1)}12%{transform:scale(1.045)}24%{transform:scale(1)}36%{transform:scale(1.025)}48%{transform:scale(1)}}
+@keyframes burstHeartDraw{to{stroke-dashoffset:0}}@keyframes burstHeartOut{0%{opacity:0;transform:scale(.55)}20%{opacity:1}70%{opacity:.9;transform:scale(1.08)}100%{opacity:0;transform:scale(1.18)}}
+@keyframes bubbleRise{to{transform:translateY(-115vh) translateX(22px);opacity:0}}@keyframes pawDrift{0%{opacity:0;transform:translateY(12px) rotate(-12deg) scale(.7)}25%{opacity:.38}75%{opacity:.25}100%{opacity:0;transform:translateY(-55px) rotate(10deg) scale(1.05)}}
+@media(prefers-reduced-motion:reduce){.heart-outline,.heart-ring,.heart-sparkles,.burst-heart,.burst-heart path,.bubble,.paw{animation:none!important;opacity:1!important;stroke-dashoffset:0}.love-heart-art{opacity:1!important}.gloss-particle{display:none!important}}
+@media(max-width:520px){.love-heart-wrap{width:min(100%,370px);min-height:clamp(245px,78vw,330px)}.heart-ring text{font-size:16px}}
+/* Keep the finale completely idle while its screen is hidden; start every timed effect on reveal. */
+.ending:not(.finale-active) .love-heart-art,
+.ending:not(.finale-active) .heart-outline,
+.ending:not(.finale-active) .heart-ring,
+.ending:not(.finale-active) .heart-sparkles,
+.ending:not(.finale-active) .burst-heart,
+.ending:not(.finale-active) .burst-heart path{animation-play-state:paused}
+.ending.finale-active .love-heart-art,
+.ending.finale-active .heart-outline,
+.ending.finale-active .heart-ring,
+.ending.finale-active .heart-sparkles,
+.ending.finale-active .burst-heart,
+.ending.finale-active .burst-heart path{animation-play-state:running}
+
+/* Paw accents appear briefly on each screen transition, away from the main copy. */
+.paw{font-size:18px;line-height:1;user-select:none;text-shadow:0 1px 5px #fff8}
+.heart-particle-layer{will-change:opacity}

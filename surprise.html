@@ -74,6 +74,33 @@
       <p class="overline">یه عالمه ذوق برای تووو!</p>
       <h2>پس بریم کلی خاطره قشنگ بسازیم! 🥹</h2>
       <p class="ending-text">دوست دارم:) ❤️</p>
+      <div class="love-heart-wrap" aria-label="سه قلب تو در تو">
+        <div class="heart-particle-layer" id="heartParticleLayer" aria-hidden="true"></div>
+        <svg class="burst-heart" viewBox="0 0 500 455" aria-hidden="true"><path pathLength="1000" d="M250 420 C205 378 42 267 42 145 C42 62 145 25 250 132 C355 25 458 62 458 145 C458 267 295 378 250 420Z"/></svg>
+        <svg class="love-heart-art" viewBox="0 0 500 455" role="img" aria-labelledby="loveHeartTitle">
+          <title id="loveHeartTitle">I LOVE YOU</title>
+          <defs>
+            <path id="heartOuter" d="M250 420 C205 378 42 267 42 145 C42 62 145 25 250 132 C355 25 458 62 458 145 C458 267 295 378 250 420Z" pathLength="1000"/>
+            <path id="heartMiddle" d="M250 355 C212 321 91 235 91 151 C91 91 164 68 250 153 C336 68 409 91 409 151 C409 235 288 321 250 355Z" pathLength="1000"/>
+            <path id="heartInner" d="M250 292 C220 268 139 207 139 157 C139 119 190 105 250 168 C310 105 361 119 361 157 C361 207 280 268 250 292Z" pathLength="1000"/>
+          </defs>
+          <g class="heart-outlines" aria-hidden="true">
+            <use href="#heartOuter" class="heart-outline outline-outer"/>
+            <use href="#heartMiddle" class="heart-outline outline-middle"/>
+            <use href="#heartInner" class="heart-outline outline-inner"/>
+          </g>
+          <g class="heart-ring outer-ring">
+            <text><textPath href="#heartOuter" startOffset="0%">I LOVE YOU  ·  I LOVE YOU  ·  I LOVE YOU  ·  I LOVE YOU  ·  I LOVE YOU  ·  I LOVE YOU  ·  I LOVE YOU  ·  I LOVE YOU  ·  I LOVE YOU  ·  I LOVE YOU  ·  I LOVE YOU  ·  I LOVE YOU  ·  I LOVE YOU  ·  I LOVE YOU  ·  I LOVE YOU  ·  I LOVE YOU  ·  I LOVE YOU  ·  </textPath></text>
+          </g>
+          <g class="heart-ring middle-ring">
+            <text><textPath href="#heartMiddle" startOffset="0%">I LOVE YOU  ·  I LOVE YOU  ·  I LOVE YOU  ·  I LOVE YOU  ·  </textPath></text>
+          </g>
+          <g class="heart-ring inner-ring">
+            <text><textPath href="#heartInner" startOffset="0%">I LOVE YOU  ·  I LOVE YOU  ·  I LOVE YOU  ·  </textPath></text>
+          </g>
+          <g class="heart-sparkles" aria-hidden="true"><text x="22" y="92">✦</text><text x="462" y="96">✧</text><text x="75" y="350">♡</text><text x="422" y="345">✦</text></g>
+        </svg>
+      </div>
       <button class="music-toggle" id="musicToggle">♫ موسیقی کوچولومون</button>
       <p class="tiny-end">با عشق، برای ریحانه کوشولووووی من</p>
     </section>
