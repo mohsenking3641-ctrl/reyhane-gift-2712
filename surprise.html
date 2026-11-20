@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-  <div class="ambient"></div><div class="float-layer" id="floatLayer"></div>
+  <div class="ambient"></div><div class="float-layer" id="floatLayer"></div><div class="magic-layer" id="magicLayer" aria-hidden="true"></div>
   <audio id="backgroundMusic" src="/music.mp3" preload="metadata" loop></audio>
   <main id="experience" class="experience">
     <section class="screen active" id="welcome">
@@ -81,9 +81,7 @@
              aria-label="Touch the heart" aria-pressed="false">
           <svg class="word-heart-svg" id="wordHeartSvg" viewBox="0 0 500 455" aria-hidden="true">
             <defs>
-              <clipPath id="wordHeartClip">
-                <path d="M250 420 C205 378 42 267 42 145 C42 62 145 25 250 132 C355 25 458 62 458 145 C458 267 295 378 250 420Z"/>
-              </clipPath>
+              <path id="wordHeartGuide" d="M250 420 C205 378 42 267 42 145 C42 62 145 25 250 132 C355 25 458 62 458 145 C458 267 295 378 250 420Z" fill="none"/>
               <radialGradient id="wordHeartGlow" cx="50%" cy="35%" r="70%">
                 <stop offset="0%" stop-color="#fff9fc"/>
                 <stop offset="48%" stop-color="#ffd2e4"/>
@@ -91,7 +89,7 @@
               </radialGradient>
             </defs>
             <path class="word-heart-halo" d="M250 420 C205 378 42 267 42 145 C42 62 145 25 250 132 C355 25 458 62 458 145 C458 267 295 378 250 420Z"/>
-            <g id="wordHeartRows" class="word-heart-rows" clip-path="url(#wordHeartClip)"></g>
+            <g id="wordHeartRows" class="word-heart-rows"></g>
           </svg>
           <span class="heart-touch-glint" aria-hidden="true">✦</span>
         </div>

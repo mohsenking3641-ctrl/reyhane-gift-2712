@@ -1,14 +1,28 @@
-# Reyhane Surprise
+# سورپرایز ریحانه
 
-A Node.js / Express password-protected surprise site. The supplied background track is stored as `music.mp3` and is served only after the PIN session is unlocked.
+نسخه‌ی تکمیل‌شده‌ی پروژه‌ی هدیه‌ی ریحانه، بر پایه‌ی سورس اصلی پروژه.
 
-## Render settings
-- Build command: `npm install`
-- Start command: `npm start`
+## فایل‌ها
+- `index.html` و `login.css` و `login.js`: صفحه‌ی ورود
+- `surprise.html` و `style.css` و `app.js`: تجربه‌ی تعاملی و انیمیشن‌ها
+- `music.mp3`: موسیقی پس‌زمینه
+- `server.js` و `package.json`: اجرای برنامه با Node.js و Express
 
-Set these environment variables in the hosting dashboard:
-- `SURPRISE_PIN`: a four-digit PIN (currently intended to be `2712`)
-- `SESSION_SECRET`: a random string at least 32 characters long
-- `NODE_ENV`: `production`
+## جلوه‌های اضافه‌شده
+- ردپاهای بزرگ پنجه در چند مرحله
+- جعبه‌ی هدیه با پاشش قلب و پروانه هنگام باز شدن
+- حباب‌های قلبی قابل لمس و افکت ترکیدن
+- گربه‌ی بازیگوش و پروانه‌ی متحرک در بخش‌های مختلف
+- روبان صورتی متحرک و پاپیون پایانی
+- ستاره‌های درخشان و صورت فلکی کوچک
+- قلب‌های براق با حرکت فنری و واکنش به لمس صفحه
+- قلب اصلی توخالی که فقط از عبارت‌های `I LOVE YOU` در امتداد خط دور قلب ساخته می‌شود؛ عبارت‌ها به‌ترتیب ظاهر می‌شوند
+- سه قلب متنی تودرتو با نمایش مرحله‌ای
 
-Do not commit real secrets to GitHub.
+## اجرا
+```bash
+npm install
+npm start
+```
+
+سایت برای صفحه‌ی موبایل بهینه شده و تنظیم `prefers-reduced-motion` را رعایت می‌کند. متن‌های اصلی و فایل موسیقی نسخه‌ی قبلی حفظ شده‌اند.

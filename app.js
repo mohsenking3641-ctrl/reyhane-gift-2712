@@ -65,7 +65,8 @@
   $("openGift").addEventListener("click", () => {
     $("openGift").classList.add("open");
     $("giftHint").textContent = "یه عالمه عشق توشه… 💗";
-    setTimeout(() => show("letter"), 950);
+    giftConfetti($("openGift"));
+    setTimeout(() => show("letter"), 1250);
   });
 
   $("showQuestion").addEventListener("click", () => show("question"));
@@ -98,35 +99,32 @@
   let finaleStarted = false;
   let heartTouched = false;
 
-  // Ten rows, ten phrases in each row: exactly 100 visible I LOVE YOU phrases.
+  // A hollow heart made by the words themselves: phrases are placed along the actual heart outline.
   function buildHundredWordHeart() {
     const group = $("wordHeartRows");
-    if (!group || group.childElementCount) return;
-    const rows = [
-      { y: 82, width: 270 },
-      { y: 116, width: 390 },
-      { y: 150, width: 445 },
-      { y: 184, width: 455 },
-      { y: 218, width: 430 },
-      { y: 252, width: 385 },
-      { y: 286, width: 330 },
-      { y: 320, width: 270 },
-      { y: 354, width: 200 },
-      { y: 386, width: 112 }
-    ];
-    const phrase = "I LOVE YOU";
-    rows.forEach((row, rowIndex) => {
-      const text = document.createElementNS(svgNS, "text");
-      text.setAttribute("x", "250");
-      text.setAttribute("y", String(row.y));
-      text.setAttribute("text-anchor", "middle");
-      text.setAttribute("textLength", String(row.width));
-      text.setAttribute("lengthAdjust", "spacingAndGlyphs");
-      text.setAttribute("class", "word-heart-line");
-      text.setAttribute("style", `--row-delay:${rowIndex * 110}ms`);
-      text.textContent = Array(10).fill(phrase).join("  ");
-      group.appendChild(text);
-    });
+    const guide = $("wordHeartGuide");
+    if (!group || !guide || group.childElementCount) return;
+    const total = guide.getTotalLength();
+    const count = 30;
+    for (let i = 0; i < count; i++) {
+      const distance = (total * (i + .5)) / count;
+      const point = guide.getPointAtLength(distance);
+      const before = guide.getPointAtLength(Math.max(0, distance - 1.5));
+      const after = guide.getPointAtLength(Math.min(total, distance + 1.5));
+      let angle = Math.atan2(after.y - before.y, after.x - before.x) * 180 / Math.PI;
+      if (angle > 90 || angle < -90) angle += 180;
+      const phrase = document.createElementNS(svgNS, "text");
+      phrase.setAttribute("x", point.x.toFixed(2));
+      phrase.setAttribute("y", point.y.toFixed(2));
+      phrase.setAttribute("text-anchor", "middle");
+      phrase.setAttribute("textLength", "45");
+      phrase.setAttribute("lengthAdjust", "spacingAndGlyphs");
+      phrase.setAttribute("class", "word-heart-line");
+      phrase.setAttribute("transform", `rotate(${angle.toFixed(2)} ${point.x.toFixed(2)} ${point.y.toFixed(2)})`);
+      phrase.style.setProperty("--word-delay", `${i * 78}ms`);
+      phrase.textContent = "I LOVE YOU";
+      group.appendChild(phrase);
+    }
   }
 
   function createSideHearts() {
@@ -297,6 +295,140 @@
       scatterHeartIntoLight();
     }
   });
+
+  // Seven playful details are distributed throughout the experience, not saved only for the finale.
+  const magicLayer = $("magicLayer");
+  const reducedMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  function giftConfetti(anchor) {
+    if (!magicLayer) return;
+    const rect = anchor.getBoundingClientRect();
+    ["♥", "♡", "✦", "🦋", "♥", "✧", "♡", "🦋"].forEach((symbol, i) => {
+      const bit = document.createElement("span");
+      bit.className = "gift-confetti";
+      bit.textContent = symbol;
+      bit.style.left = (rect.left + rect.width / 2) + "px";
+      bit.style.top = (rect.top + 35) + "px";
+      bit.style.setProperty("--burst-x", `${(Math.random() - .5) * 230}px`);
+      bit.style.setProperty("--burst-y", `${-55 - Math.random() * 150}px`);
+      bit.style.setProperty("--burst-delay", `${i * 35}ms`);
+      magicLayer.appendChild(bit);
+      setTimeout(() => bit.remove(), 1700);
+    });
+  }
+
+  function makeHeartBubble(x, y) {
+    const bubble = document.createElement("button");
+    bubble.type = "button";
+    bubble.className = "heart-bubble";
+    bubble.setAttribute("aria-label", "حباب قلبی");
+    bubble.textContent = "♡";
+    bubble.style.left = x + "px";
+    bubble.style.top = y + "px";
+    magicLayer.appendChild(bubble);
+    bubble.addEventListener("click", () => {
+      const r = bubble.getBoundingClientRect();
+      giftConfettiAt(r.left + r.width / 2, r.top + r.height / 2);
+      bubble.classList.add("popped");
+      setTimeout(() => bubble.remove(), 450);
+    }, {once:true});
+    setTimeout(() => bubble.remove(), 6500);
+  }
+
+  function giftConfettiAt(x, y) {
+    ["♥", "✦", "♡", "✧", "♥"].forEach((symbol, i) => {
+      const bit = document.createElement("span");
+      bit.className = "gift-confetti";
+      bit.textContent = symbol;
+      bit.style.left = x + "px"; bit.style.top = y + "px";
+      bit.style.setProperty("--burst-x", `${(Math.random() - .5) * 125}px`);
+      bit.style.setProperty("--burst-y", `${(Math.random() - .5) * 125}px`);
+      bit.style.setProperty("--burst-delay", `${i * 25}ms`);
+      magicLayer.appendChild(bit); setTimeout(() => bit.remove(), 1400);
+    });
+  }
+
+  function popMiniKitten() {
+    if (!magicLayer || document.querySelector(".wandering-kitten")) return;
+    const cat = document.createElement("span");
+    cat.className = "wandering-kitten";
+    cat.textContent = "🐱";
+    cat.style.left = Math.random() > .5 ? "-70px" : "calc(100% + 8px)";
+    cat.dataset.direction = cat.style.left.startsWith("-") ? "right" : "left";
+    magicLayer.appendChild(cat);
+    requestAnimationFrame(() => cat.classList.add("kitten-walk"));
+    setTimeout(() => { cat.classList.add("kitten-peek"); }, 1550);
+    setTimeout(() => cat.remove(), 3900);
+  }
+
+  function sendChasingButterfly() {
+    if (!magicLayer || document.querySelector(".chase-butterfly")) return;
+    const butterfly = document.createElement("span");
+    butterfly.className = "chase-butterfly";
+    butterfly.textContent = "🦋";
+    magicLayer.appendChild(butterfly);
+    popMiniKitten();
+    setTimeout(() => butterfly.remove(), 3300);
+  }
+
+  function drawMagicRibbon() {
+    if (!magicLayer || document.querySelector(".magic-ribbon")) return;
+    const ribbon = document.createElement("span");
+    ribbon.className = "magic-ribbon";
+    ribbon.textContent = "〰🎀〰";
+    magicLayer.appendChild(ribbon);
+    setTimeout(() => ribbon.remove(), 2500);
+  }
+
+  function twinkleMiniConstellation() {
+    if (!magicLayer || document.querySelector(".mini-constellation")) return;
+    const sky = document.createElement("div");
+    sky.className = "mini-constellation";
+    sky.innerHTML = '<i>✦</i><i>✧</i><i>✦</i><i>✧</i><i>✦</i>';
+    magicLayer.appendChild(sky);
+    setTimeout(() => sky.remove(), 3500);
+  }
+
+  function bouncingHearts(x, y) {
+    if (!magicLayer) return;
+    for (let i = 0; i < 4; i++) {
+      const heart = document.createElement("span");
+      heart.className = "spring-heart";
+      heart.textContent = i % 2 ? "♡" : "♥";
+      heart.style.left = x + "px"; heart.style.top = y + "px";
+      heart.style.setProperty("--spring-x", `${(i - 1.5) * 28}px`);
+      heart.style.setProperty("--spring-y", `${-38 - Math.random() * 38}px`);
+      magicLayer.appendChild(heart);
+      setTimeout(() => heart.remove(), 1250);
+    }
+  }
+
+  // Little surprises recur gently between screens; nothing covers the original copy or controls.
+  let surpriseCycle = 0;
+  setInterval(() => {
+    if (document.hidden || reducedMotion) return;
+    const active = document.querySelector(".screen.active");
+    if (!active || active.id === "ending" || active.id === "letter") return;
+    surpriseCycle++;
+    if (surpriseCycle % 4 === 0) sendChasingButterfly();
+    else if (surpriseCycle % 3 === 0) twinkleMiniConstellation();
+    else if (surpriseCycle % 2 === 0) drawMagicRibbon();
+    else popMiniKitten();
+  }, 9200);
+
+  setInterval(() => {
+    if (document.hidden || reducedMotion) return;
+    const active = document.querySelector(".screen.active");
+    if (!active || active.id === "ending" || active.id === "letter") return;
+    const x = 24 + Math.random() * Math.max(80, window.innerWidth - 72);
+    const y = 70 + Math.random() * Math.max(100, window.innerHeight - 190);
+    makeHeartBubble(x, y);
+  }, 5200);
+
+  document.addEventListener("pointerdown", event => {
+    if (event.target.closest("button, .word-heart-stage, .music-toggle, .sound")) return;
+    bouncingHearts(event.clientX, event.clientY);
+  }, {passive:true});
 
   const audio = $("backgroundMusic");
   let musicOn = false;
