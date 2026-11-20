@@ -182,17 +182,18 @@ h2{font-size:clamp(23px,6vw,34px);line-height:1.8;color:#a6537b;margin:8px 0 12p
 .bow-arrives .finale-bow{animation:bowPop .8s cubic-bezier(.2,.8,.2,1) forwards}
 .kitten-finale{
   z-index:10;inset:auto auto 0 1%;
-  width:145px;height:115px;opacity:0;transform:translate(-18px,12px) scale(.65);
+  width:155px;height:125px;opacity:0;transform:translate(-18px,12px) scale(.72);
+  transform-origin:left bottom;visibility:visible;
 }
-.kitten-3d{position:absolute;left:0;bottom:0;width:100px;height:98px;overflow:visible;filter:drop-shadow(0 7px 7px #b85e8955)}
-.kitten-tail-art{position:absolute;left:53px;bottom:30px;width:90px;height:78px;overflow:visible}
+.kitten-3d{position:absolute;left:0;bottom:0;width:112px;height:108px;overflow:visible;filter:drop-shadow(0 7px 7px #b85e8955)}
+.kitten-tail-art{position:absolute;left:61px;bottom:31px;width:105px;height:88px;overflow:visible;filter:drop-shadow(0 2px 4px #c77a9e55)}
 .kitten-tail-path{
   fill:none;stroke:#c77a9e;stroke-width:5;stroke-linecap:round;
   stroke-dasharray:1000;stroke-dashoffset:1000;
 }
 .kitten-tail-star{fill:#f5c1d7;stroke:#d879a6;stroke-width:2;opacity:0;transform-origin:94px 104px;transform:scale(.2)}
 .kitten-arrives .kitten-finale{animation:kittenPop .8s cubic-bezier(.2,.8,.2,1) forwards}
-.kitten-arrives .kitten-tail-path{animation:tailDraw 1.8s ease .55s forwards}
+.kitten-arrives .kitten-tail-path{animation:tailDraw 2.2s cubic-bezier(.45,0,.2,1) .45s forwards}
 .kitten-arrives .kitten-tail-star{animation:tailStar .55s ease 2.1s forwards}
 .finale-constellation{z-index:7;opacity:0;overflow:visible;filter:drop-shadow(0 0 7px #f4a5c8)}
 .constellation-line{fill:none;stroke:#f2a6c7;stroke-width:1.6;stroke-dasharray:1000;stroke-dashoffset:1000;stroke-linecap:round}
@@ -239,7 +240,7 @@ h2{font-size:clamp(23px,6vw,34px);line-height:1.8;color:#a6537b;margin:8px 0 12p
   .word-heart-line{font-size:16px}
   .nested-ring text{font-size:20px;letter-spacing:.7px}
   .finale-paw-print{font-size:34px}
-  .kitten-finale{transform:translate(-18px,12px) scale(.58);transform-origin:left bottom}
+  .kitten-finale{transform:translate(-18px,12px) scale(.68);transform-origin:left bottom}
   .kitten-arrives .kitten-finale{animation:kittenPop .8s cubic-bezier(.2,.8,.2,1) forwards}
 }
 @media(prefers-reduced-motion:reduce){
@@ -312,15 +313,3 @@ h2{font-size:clamp(23px,6vw,34px);line-height:1.8;color:#a6537b;margin:8px 0 12p
 .chase-butterfly{position:fixed;left:0;top:67%;z-index:6;font-size:28px;line-height:1;pointer-events:none;filter:drop-shadow(0 3px 5px #d77da555);will-change:transform}
 @media(max-width:520px){.wandering-kitten{font-size:37px}.chase-butterfly{font-size:24px}}
 @media(prefers-reduced-motion:reduce){.inner-word-heart{animation:none!important;opacity:1!important}}
-
-/* Restored tail-drawing kitten and a visible, coordinated butterfly chase. */
-.kitten-arrives .kitten-finale{opacity:1;animation:kittenPop .8s cubic-bezier(.2,.8,.2,1) forwards}
-.kitten-arrives .kitten-tail-path{animation:tailDraw 1.8s ease .55s forwards}
-.kitten-arrives .kitten-tail-star{animation:tailStar .55s ease 2.1s forwards}
-.inner-hearts-arrive #innerWordHearts .inner-word-heart{animation-play-state:running}
-.finale-kitten-chase{position:absolute!important;left:0!important;top:auto!important;bottom:2%!important;right:auto!important;inset:auto auto 2% 0!important;width:145px!important;height:115px!important;opacity:1!important;z-index:14!important;transform-origin:left bottom;pointer-events:none}
-.finale-kitten-chase .kitten-3d{width:100px;height:98px}
-.finale-kitten-chase .kitten-tail-art{width:90px;height:78px}
-.finale-kitten-chase .kitten-tail-path{stroke-dashoffset:0}
-.finale-chase-butterfly{position:absolute;left:0;top:18%;font-size:25px;z-index:15;pointer-events:none;filter:drop-shadow(0 3px 5px #d77da555)}
-@media(max-width:520px){.finale-kitten-chase{transform:scale(.72);transform-origin:left bottom}.finale-chase-butterfly{font-size:22px}}
