@@ -125,6 +125,51 @@
       phrase.textContent = "I LOVE YOU";
       group.appendChild(phrase);
     }
+    buildNestedWordHearts();
+  }
+
+  // Three smaller hollow hearts are drawn from the same repeated words, inside the large heart.
+  function buildNestedWordHearts() {
+    const svg = $("wordHeartSvg");
+    if (!svg || $("innerWordHearts")) return;
+    const defs = svg.querySelector("defs");
+    const group = document.createElementNS(svgNS, "g");
+    group.setAttribute("id", "innerWordHearts");
+    group.setAttribute("aria-hidden", "true");
+    const rings = [
+      { d: "M250 306 C232 289 181 258 181 224 C181 197 215 188 250 220 C285 188 319 197 319 224 C319 258 268 289 250 306Z", count: 13, delay: 2500, color: "#d46b99" },
+      { d: "M250 286 C238 275 205 253 205 230 C205 211 226 205 250 226 C274 205 295 211 295 230 C295 253 262 275 250 286Z", count: 9, delay: 3400, color: "#e58ab0" },
+      { d: "M250 267 C242 260 226 247 226 236 C226 225 238 222 250 235 C262 222 274 225 274 236 C274 247 258 260 250 267Z", count: 7, delay: 4100, color: "#f0a8c5" }
+    ];
+    rings.forEach((ring, ringIndex) => {
+      const guide = document.createElementNS(svgNS, "path");
+      guide.setAttribute("d", ring.d);
+      guide.setAttribute("fill", "none");
+      defs.appendChild(guide);
+      const guideId = `innerWordHeartGuide${ringIndex}`;
+      guide.setAttribute("id", guideId);
+      for (let i = 0; i < ring.count; i++) {
+        const distance = guide.getTotalLength() * (i + .5) / ring.count;
+        const point = guide.getPointAtLength(distance);
+        const before = guide.getPointAtLength(Math.max(0, distance - 1));
+        const after = guide.getPointAtLength(Math.min(guide.getTotalLength(), distance + 1));
+        let angle = Math.atan2(after.y - before.y, after.x - before.x) * 180 / Math.PI;
+        if (angle > 90 || angle < -90) angle += 180;
+        const word = document.createElementNS(svgNS, "text");
+        word.setAttribute("x", point.x.toFixed(2));
+        word.setAttribute("y", point.y.toFixed(2));
+        word.setAttribute("text-anchor", "middle");
+        word.setAttribute("textLength", ringIndex === 2 ? "24" : "31");
+        word.setAttribute("lengthAdjust", "spacingAndGlyphs");
+        word.setAttribute("class", `inner-word-heart inner-word-heart-${ringIndex + 1}`);
+        word.setAttribute("fill", ring.color);
+        word.setAttribute("transform", `rotate(${angle.toFixed(2)} ${point.x.toFixed(2)} ${point.y.toFixed(2)})`);
+        word.style.setProperty("--inner-delay", `${ring.delay + i * 75}ms`);
+        word.textContent = "I LOVE YOU";
+        group.appendChild(word);
+      }
+    });
+    svg.appendChild(group);
   }
 
   function createSideHearts() {
@@ -241,12 +286,9 @@
     if (heartTouched || !wordHeartStage) return;
     heartTouched = true;
     wordHeartStage.setAttribute("aria-pressed", "true");
-    wordHeartStage.classList.add("word-heart-scattering");
+    wordHeartStage.classList.add("word-heart-touched");
 
-    if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      revealNestedHearts();
-      return;
-    }
+    if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     const count = 200;
     const centerX = window.innerWidth * 0.5;
@@ -272,20 +314,7 @@
       setTimeout(() => particle.remove(), 2250 + delay);
     }
 
-    setTimeout(revealNestedHearts, 1750);
-  }
-
-  function revealNestedHearts() {
-    wordHeartStage.classList.remove("word-heart-visible");
-    wordHeartStage.classList.add("word-heart-hidden");
-    nestedHeartStage.classList.add("nested-heart-visible");
-    nestedHeartStage.setAttribute("aria-hidden", "false");
-    $("finaleScene").classList.add("nested-phase");
-
-    // The kitten's tail draws a tiny heart; its tip becomes a star in the constellation.
-    setTimeout(() => $("finaleScene").classList.add("kitten-arrives"), 5550);
-    setTimeout(() => $("finaleScene").classList.add("constellation-arrives"), 7900);
-    setTimeout(() => $("finaleScene").classList.add("bow-arrives"), 1200);
+    wordHeartStage.classList.add("word-heart-touched");
   }
 
   wordHeartStage.addEventListener("click", scatterHeartIntoLight);
@@ -353,22 +382,40 @@
     const cat = document.createElement("span");
     cat.className = "wandering-kitten";
     cat.textContent = "🐱";
-    cat.style.left = Math.random() > .5 ? "-70px" : "calc(100% + 8px)";
-    cat.dataset.direction = cat.style.left.startsWith("-") ? "right" : "left";
+    cat.style.left = "-64px";
+    cat.style.top = "auto";
+    cat.style.bottom = "9%";
     magicLayer.appendChild(cat);
-    requestAnimationFrame(() => cat.classList.add("kitten-walk"));
-    setTimeout(() => { cat.classList.add("kitten-peek"); }, 1550);
-    setTimeout(() => cat.remove(), 3900);
+    cat.animate([
+      { transform: "translate(0,0) scaleX(1)" },
+      { transform: `translate(${Math.max(0, window.innerWidth * .43)}px,-9px) scaleX(1)` },
+      { transform: `translate(${Math.max(0, window.innerWidth + 90)}px,0) scaleX(1)` }
+    ], { duration: 3900, easing: "linear", fill: "forwards" });
+    setTimeout(() => cat.remove(), 4050);
   }
 
   function sendChasingButterfly() {
     if (!magicLayer || document.querySelector(".chase-butterfly")) return;
     const butterfly = document.createElement("span");
+    const cat = document.createElement("span");
     butterfly.className = "chase-butterfly";
     butterfly.textContent = "🦋";
-    magicLayer.appendChild(butterfly);
-    popMiniKitten();
-    setTimeout(() => butterfly.remove(), 3300);
+    cat.className = "wandering-kitten";
+    cat.textContent = "🐱";
+    magicLayer.append(cat, butterfly);
+    const width = window.innerWidth;
+    const travel = width + 100;
+    butterfly.animate([
+      { transform: "translate(-20px,0) rotate(-12deg)" },
+      { transform: `translate(${travel * .48}px,-44px) rotate(12deg)` },
+      { transform: `translate(${travel}px,-8px) rotate(-8deg)` }
+    ], { duration: 4200, easing: "ease-in-out", fill: "forwards" });
+    cat.animate([
+      { transform: "translate(-88px,0) scaleX(1)" },
+      { transform: `translate(${travel * .48 - 76}px,-7px) scaleX(1)` },
+      { transform: `translate(${travel - 65}px,0) scaleX(1)` }
+    ], { duration: 4200, delay: 350, easing: "ease-in-out", fill: "forwards" });
+    setTimeout(() => { butterfly.remove(); cat.remove(); }, 4700);
   }
 
   function drawMagicRibbon() {

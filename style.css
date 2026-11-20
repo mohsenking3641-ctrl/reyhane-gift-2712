@@ -297,3 +297,18 @@ h2{font-size:clamp(23px,6vw,34px);line-height:1.8;color:#a6537b;margin:8px 0 12p
 @keyframes springHeart{0%{opacity:0;transform:translate(-50%,-50%) scale(.2)}25%{opacity:1;transform:translate(calc(-50% + var(--spring-x)),calc(-50% + var(--spring-y))) scale(1.25)}58%{opacity:1;transform:translate(calc(-50% + var(--spring-x)),calc(-50% + var(--spring-y) + 12px)) scale(.9)}100%{opacity:0;transform:translate(calc(-50% + var(--spring-x)),calc(-50% + var(--spring-y) - 22px)) scale(.55)}}
 @media(max-width:520px){.heart-bubble{width:30px;height:30px;font-size:18px}.wandering-kitten{font-size:37px}.word-heart-line{font-size:11px}}
 @media(prefers-reduced-motion:reduce){.heart-bubble,.gift-confetti,.wandering-kitten,.chase-butterfly,.magic-ribbon,.mini-constellation i,.spring-heart{animation:none!important}.wandering-kitten,.chase-butterfly,.magic-ribbon,.mini-constellation{display:none!important}}
+
+/* Revision: the small typographic hearts draw progressively INSIDE the large hollow heart. */
+#innerWordHearts{opacity:1;pointer-events:none}
+.inner-word-heart{font-family:Arial,sans-serif;font-size:7px;font-weight:900;letter-spacing:.12px;opacity:0;filter:drop-shadow(0 0 2px #fff);animation:innerWordAppear .34s cubic-bezier(.2,.75,.2,1) var(--inner-delay) forwards;animation-play-state:paused}
+.word-heart-visible #innerWordHearts .inner-word-heart{animation-play-state:running}
+.inner-word-heart-2{font-size:6.2px}
+.inner-word-heart-3{font-size:5.4px}
+@keyframes innerWordAppear{0%{opacity:0}70%{opacity:1;filter:drop-shadow(0 0 5px #f6b4ce)}100%{opacity:1;filter:drop-shadow(0 0 2px #fff)}}
+.word-heart-touched{animation:heartPulse 1.8s ease-in-out 2}
+.word-heart-touched #innerWordHearts{filter:drop-shadow(0 0 8px #f2a5c5)}
+/* The kitten and butterfly share one route; the kitten follows just behind. */
+.wandering-kitten{position:fixed;left:0;bottom:9%;z-index:5;font-size:43px;line-height:1;pointer-events:none;filter:drop-shadow(0 5px 6px #b96b8d33);will-change:transform}
+.chase-butterfly{position:fixed;left:0;top:67%;z-index:6;font-size:28px;line-height:1;pointer-events:none;filter:drop-shadow(0 3px 5px #d77da555);will-change:transform}
+@media(max-width:520px){.wandering-kitten{font-size:37px}.chase-butterfly{font-size:24px}}
+@media(prefers-reduced-motion:reduce){.inner-word-heart{animation:none!important;opacity:1!important}}
